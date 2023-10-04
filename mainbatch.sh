@@ -86,7 +86,17 @@ does_complete_job_ran= false
 load_env_variable 2>&1
 load_to_isrreport 2>&1
 complete_batch 2>&1
-                             
+
+config_file_count = find $mapping_mfu -name "${country}_tdd_idt_mfu_file_config.csv" | wc -l
+if [$config_file_count -gt 0]; then
+    echo "---Job Started---- "
+    echo "config gile exist"
+    update_c_table 2>&1
+    does_config_update_ran =true
+    echo "config validation completed"
+else:
+    echo "no $country"
+fi
 }
 
 
