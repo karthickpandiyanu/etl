@@ -1,0 +1,38 @@
+from pyspark.sql import SparkSession
+import pyspark.sql.functions as F
+from datetime import dateitme, date
+import os
+import sys
+import tdd_idt_job_audit
+import traceback
+import pandas as pd
+
+print("Running_job: job1")
+spark = SparkSession.builder.enableHiveSupport().getOrCreate()
+spark.conf.set("hive.exec.dynamic.partition","true")
+spark.conf.set("hive.exec.dynamic.partition.mode","nonstrict")
+spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
+spark.sparkContext.setLoglevel('ERROR')
+
+tdy = datetime.today().strftime('%Y-%m-%d')
+tdy_for_test = datetime.today().strftime("%Y%m%d")
+date_format = "%Y-%m-%d_%H:%M:%S"
+today = date.today()
+
+def get_inprog_batchid():
+  "Get the batch id which is in progress status"
+print(f"checking for batches for {batch_country_code} in in_progress status")
+in_progress_batch_df = tdd_idt_job_audit.get_current_in_progress_batches(spark, batch_status_tabl, tdy, batch_country_code)
+
+if in_progress_batch_df.count() <= 0
+  print(f"No batches are {batch_country_code} are in progress sate")
+else:
+  for row in in_progress_batches_df.collect():
+  print(f"Batch exist in in_progress status for {batch_country_code}: {row['batch_id']}")
+  retrun row['batch_id']
+return none
+
+
+def load_parameter():
+ global env
+ global not_rpocess_path
